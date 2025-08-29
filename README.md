@@ -7,7 +7,20 @@ Chatbot pokriva ograničen skup **namjera** (radno vrijeme, ulaznice, adresa, iz
 
 ---
 
-## 🚀 Kako pokrenuti
+## 🌍 Online testiranje
+
+Nije nužno ništa pokretati lokalno – chatbot je dostupan online:  
+👉 [https://rba-chatbot-assignment.onrender.com/](https://rba-chatbot-assignment.onrender.com/)
+
+- GUI (za Selenium testiranje): `/`  
+- Popis namjera: `/intents`  
+- REST endpointi: `/health`, `/prompt`, `/docs` (Swagger)
+
+Za `POST /prompt` i Selenium testiranje potreban je **API ključ** koji ste dobili od nas.
+
+---
+
+## 🚀 Kako pokrenuti lokalno
 
 ### 1. Lokalno (Python venv)
 
@@ -100,12 +113,13 @@ Kandidati mogu birati pristup:
 
 2. **Selenium testovi**
 
-   * otvoriti `http://localhost:8000/` i koristiti GUI:
+   * otvoriti GUI:
 
-     * upisati API ključ (`#api-key-input`),
-     * slati poruke (`#chat-input` + `#chat-send`),
-     * čitati odgovore (`#chat-messages`).
-   * generirati izvještaje po volji
+     * lokalno → `http://localhost:8000/`
+     * online → [https://rba-chatbot-assignment.onrender.com/](https://rba-chatbot-assignment.onrender.com/)
+   * upisati API ključ (`#api-key-input`)
+   * slati poruke (`#chat-input` + `#chat-send`)
+   * čitati odgovore (`#chat-messages`)
 
 ---
 
@@ -113,8 +127,13 @@ Kandidati mogu birati pristup:
 
 Swagger dokumentacija dostupna je na:
 
-* [http://localhost:8000/docs](http://localhost:8000/docs)
-* OpenAPI JSON: [http://localhost:8000/openapi.json](http://localhost:8000/openapi.json)
+* Lokalno: [http://localhost:8000/docs](http://localhost:8000/docs)
+* Online: [https://rba-chatbot-assignment.onrender.com/docs](https://rba-chatbot-assignment.onrender.com/docs)
+
+OpenAPI JSON:
+
+* Lokalno: [http://localhost:8000/openapi.json](http://localhost:8000/openapi.json)
+* Online: [https://rba-chatbot-assignment.onrender.com/openapi.json](https://rba-chatbot-assignment.onrender.com/openapi.json)
 
 ---
 
