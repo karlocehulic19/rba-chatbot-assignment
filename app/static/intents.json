@@ -1,0 +1,52 @@
+[
+  {
+    "intent": "radno_vrijeme",
+    "canonical_reply": "Otvoreni smo uto–ned 10:00–18:00. Ponedjeljkom zatvoreno.",
+    "examples": ["Kad radite?", "Koje je radno vrijeme?", "Do kada ste otvoreni danas?"]
+  },
+  {
+    "intent": "ulaznice",
+    "canonical_reply": "Opća ulaznica iznosi 12 €, studenti/umirovljenici 8 €, djeca do 12 g. besplatno.",
+    "examples": ["Koliko košta ulaznica?", "Cijena karata?", "Imate li popust za studente?"]
+  },
+  {
+    "intent": "adresa",
+    "canonical_reply": "Gradski Muzej Rivertown, Riječka avenija 12, Zagreb.",
+    "examples": ["Gdje se nalazite?", "Koja je adresa muzeja?"]
+  },
+  {
+    "intent": "danas_izlozbe",
+    "canonical_reply": "Današnji naglasci: 'Impresionisti Save' i 'Stari obrti Slavonije'.",
+    "examples": ["Što ima danas od izložbi?", "Što je danas na programu?"]
+  },
+  {
+    "intent": "kafic",
+    "canonical_reply": "Kafić Riverbend u prizemlju nudi grickalice, kavu i čaj.",
+    "examples": ["Imate li kafić?", "Gdje mogu popiti kavu?"]
+  },
+  {
+    "intent": "toaleti",
+    "canonical_reply": "Toaleti su na svakom katu pokraj dizala.",
+    "examples": ["Gdje je WC?", "Gdje su toaleti?"]
+  },
+  {
+    "intent": "pristupacnost",
+    "canonical_reply": "Osiguran je pristup za invalidska kolica, dizala i besplatan ulaz za pratnju.",
+    "examples": ["Jeste li pristupačni za invalidska kolica?", "Imate li dizalo?"]
+  },
+  {
+    "intent": "parking",
+    "canonical_reply": "Podzemna garaža je odmah do muzeja; prvi sat je besplatan.",
+    "examples": ["Ima li parking?", "Gdje mogu parkirati?"]
+  },
+  {
+    "intent": "clanstvo",
+    "canonical_reply": "Članarina od 45 € godišnje – besplatan ulaz i pozivnice za događaje.",
+    "examples": ["Nudite li članstvo?", "Kako postati član?"]
+  },
+  {
+    "intent": "kontakt",
+    "canonical_reply": "Kontakt: +385 1 555 123, hello@rivertownmuseum.hr.",
+    "examples": ["Kako vas mogu kontaktirati?", "Broj telefona?"]
+  }
+]

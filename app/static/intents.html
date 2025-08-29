@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Namjere (eng. Intents) - Muzejski Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h1 id="intents-title" data-testid="intents-title">Referenca za chatbot</h1>
+      <p class="meta">Statička referenca za kandidate. Ovjde možete vidjeti koje namjere (engl. intent) chatbot "može" prepoznati. Ovo će Vam dobro doći prilikom stvaranja testnog skupa pitanja.</p>
+
+      <table id="intents-table" data-testid="intents-table" aria-label="Tablica namjera">
+        <thead>
+          <tr>
+            <th>Intent</th>
+            <th>Kanonski odgovor</th>
+            <th>Primjeri</th>
+          </tr>
+        </thead>
+        <tbody id="intents-tbody" data-testid="intents-tbody"></tbody>
+      </table>
+
+      <p class="meta mt12"><a href="/">GUI za razgovor: /</a></p>
+    </div>
+
+    <script>
+      async function loadIntents() {
+        const res = await fetch('/static/intents.json');
+        const data = await res.json();
+        const tbody = document.getElementById('intents-tbody');
+        tbody.innerHTML = '';
+        for (const row of data) {
+          const tr = document.createElement('tr');
+          tr.setAttribute('data-testid', `intent-row-${row.intent}`);
+
+          const tdIntent = document.createElement('td');
+          tdIntent.innerHTML = `<code id="intent-${row.intent}" data-testid="intent-name">${row.intent}</code>`;
+
+          const tdReply = document.createElement('td');
+          tdReply.textContent = row.canonical_reply;
+          tdReply.setAttribute('data-testid', 'intent-reply');
+
+          const tdExamples = document.createElement('td');
+          tdExamples.setAttribute('data-testid', 'intent-examples');
+          tdExamples.innerHTML = row.examples.map(e => `<span class="meta" style="display:block">${e}</span>`).join('');
+
+          tr.appendChild(tdIntent);
+          tr.appendChild(tdReply);
+          tr.appendChild(tdExamples);
+          tbody.appendChild(tr);
+        }
+      }
+      loadIntents();
+    </script>
+  </body>
+</html>

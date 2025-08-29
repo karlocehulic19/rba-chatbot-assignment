@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Muzejski Chatbot - RBA Zadatak</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h1 id="app-title" data-testid="app-title">Muzejski Chatbot - RBA Zadatak</h1>
+      <p class="meta">Putem ovog grafičkog sučelja možete pokrenuti Selenium testove. Potrudili smo se olakšati rad s HTML elementima što je više moguće. 😉</p>
+
+      <div class="card col" id="auth-card" data-testid="auth-card">
+        <label for="api-key-input">API ključ (X-API-KEY)</label>
+        <div class="row">
+          <input id="api-key-input" data-testid="api-key-input" type="text" value="" placeholder="Ovdje unesite dobiveni ključ"/>
+          <button id="save-key-btn" data-testid="save-key-btn">Spremi ključ</button>
+        </div>
+        <p class="meta">Ključ se sprema samo u <code>sessionStorage</code>.</p>
+      </div>
+
+      <div class="card col" id="chat-card" data-testid="chat-card">
+        <div id="chat-messages" data-testid="chat-messages" aria-live="polite" aria-label="Povijest razgovora"></div>
+        <div class="row mt12" id="input-row" data-testid="input-row">
+          <input id="chat-input" data-testid="chat-input" type="text" placeholder="Postavite pitanje..." style="flex:1" />
+          <button id="chat-send" data-testid="chat-send">Pošalji</button>
+        </div>
+      </div>
+
+      <div class="card" id="help-card" data-testid="help-card">
+        <p class="meta"><a href="/intents">Popis namjera: /intents</a></p>
+      </div>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
