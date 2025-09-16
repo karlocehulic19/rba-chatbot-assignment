@@ -26,13 +26,6 @@ def promt_request(message):
         json=json)
 
 
-def assert_replaced_char(char, index, message):
-    new_message = message[:index] + char + message[index+1:]
-    response = promt_request(new_message)
-    assert response.status_code == 200
-    assert response.json()["intent"] == "radno_vrijeme"
-
-
 class RadnoVrijeme(TestCase):
     def test_zadani_primjeri_rade(self):
         for n in primjeri["zadani"]:
@@ -50,26 +43,33 @@ class RadnoVrijeme(TestCase):
 
     # pod typo se misli na malu gresku u jednom slovu
     def test_primjeri_sa_typoom(self):
-        specificni_primeri = primjeri.values()
+        def assert_replaced_char(char, index, message):
+            new_message = message[:index] + char + message[index+1:]
+            response = promt_request(new_message)
+            assert response.status_code == 200
+            assert response.json()["intent"] == "radno_vrijeme"
+
+        def assert_every_possible_typo(primjer):
+            for index in range(len(primjer) - 1):
+                threads = []
+                for lowercase in range(ord("a"), ord("z") + 1):
+                    t1 = threading.Thread(target=assert_replaced_char, args=(
+                        chr(lowercase), index, primjer))
+                    threads.append(t1)
+                    t1.start()
+
+                for uppercase in range(ord("A"), ord("Z") + 1):
+                    t2 = threading.Thread(target=assert_replaced_char, args=(
+                        chr(uppercase), index, primjer))
+                    t2.start()
+                    threads.append(t2)
+
+                for t in threads:
+                    t.join()
 
         for specificni_primeri in primjeri.values():
             for primjer in specificni_primeri:
-                for index in range(len(primjer) - 1):
-                    threads = []
-                    for lowercase in range(ord("a"), ord("z") + 1):
-                        t1 = threading.Thread(target=assert_replaced_char, args=(
-                            chr(lowercase), index, primjer))
-                        threads.append(t1)
-                        t1.start()
-
-                    for uppercase in range(ord("A"), ord("Z") + 1):
-                        t2 = threading.Thread(target=assert_replaced_char, args=(
-                            chr(uppercase), index, primjer))
-                        t2.start()
-                        threads.append(t2)
-
-                    for t in threads:
-                        t.join()
+                assert_every_possible_typo(primjer)
 
     def test_primjeri_bez_upitnika(self):
         for primjer in primjeri["zadani"]:
