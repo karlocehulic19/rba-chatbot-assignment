@@ -44,16 +44,29 @@ class RadnoVrijeme(TestCase):
             for index in range(len(primjer) - 1):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
-                    t1 = threading.Thread(target=assert_replaced_char, args=(
-                        chr(lowercase), index, primjer))
-                    threads.append(t1)
-                    t1.start()
+                    primjer[i] = chr(lowercase)
+                    json = {
+                        "message": "".join(primjer)
+                    }
+
+                    response = requests.post(
+                        "http://localhost:8000/prompt", headers=headers,
+                        json=json)
+                    assert response.status_code == 200
+                    assert response.json()["intent"] == "radno_vrijeme"
 
                 for uppercase in range(ord("A"), ord("Z") + 1):
-                    t2 = threading.Thread(target=assert_replaced_char, args=(
-                        chr(uppercase), index, primjer))
-                    t2.start()
-                    threads.append(t2)
+                    primjer[i] = chr(uppercase)
+                    json = {
+                        "message": "".join(primjer)
+                    }
 
-                for t in threads:
-                    t.join()
+                    response = requests.post(
+                        "http://localhost:8000/prompt", headers=headers,
+                        json=json)
+                    assert response.status_code == 200
+                    assert response.json()["intent"] == "radno_vrijeme"
+
+                    primjer[i] = initial_s
+
+                primjer[i] = initial_s
