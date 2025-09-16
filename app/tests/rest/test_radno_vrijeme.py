@@ -5,18 +5,22 @@ zadani_primjeri = ["Kad radite?", "Koje je radno vrijeme?",
                    "Do kada ste otvoreni danas?"]
 
 
-headers = {"X-API-KEY": "TAJNI_KLJUC"}
+def promt_request(message):
+    headers = {"X-API-KEY": "TAJNI_KLJUC"}
+
+    json = {
+        "message": message
+    }
+
+    return requests.post(
+        "http://localhost:8000/prompt", headers=headers,
+        json=json)
 
 
 class RadnoVrijeme(TestCase):
     def test_zadani_primjeri_rade(self):
         for n in zadani_primjeri:
-            json = {
-                "message": n
-            }
-
-            response = requests.post(
-                "http://localhost:8000/prompt", headers=headers, json=json)
+            response = promt_request(n)
 
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
@@ -28,12 +32,7 @@ class RadnoVrijeme(TestCase):
         ]
 
         for n in modifikacije_zadanih_primjera:
-            json = {
-                "message": n
-            }
-
-            response = requests.post(
-                "http://localhost:8000/prompt", headers=headers, json=json)
+            response = promt_request(n)
 
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
@@ -45,25 +44,17 @@ class RadnoVrijeme(TestCase):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
                     primjer[i] = chr(lowercase)
-                    json = {
-                        "message": "".join(primjer)
-                    }
+                    typoed_example = "".join(primjer)
 
-                    response = requests.post(
-                        "http://localhost:8000/prompt", headers=headers,
-                        json=json)
+                    response = promt_request(typoed_example)
                     assert response.status_code == 200
                     assert response.json()["intent"] == "radno_vrijeme"
 
                 for uppercase in range(ord("A"), ord("Z") + 1):
                     primjer[i] = chr(uppercase)
-                    json = {
-                        "message": "".join(primjer)
-                    }
+                    typoed_example = "".join(primjer)
 
-                    response = requests.post(
-                        "http://localhost:8000/prompt", headers=headers,
-                        json=json)
+                    response = promt_request(typoed_example)
                     assert response.status_code == 200
                     assert response.json()["intent"] == "radno_vrijeme"
 
