@@ -43,21 +43,13 @@ class RadnoVrijeme(TestCase):
             for index in range(len(primjer) - 1):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
-                    primjer[i] = chr(lowercase)
-                    typoed_example = "".join(primjer)
-
-                    response = promt_request(typoed_example)
+                    question = suffix + chr(lowercase) + prefix
+                    response = promt_request(question)
                     assert response.status_code == 200
                     assert response.json()["intent"] == "radno_vrijeme"
 
                 for uppercase in range(ord("A"), ord("Z") + 1):
-                    primjer[i] = chr(uppercase)
-                    typoed_example = "".join(primjer)
-
-                    response = promt_request(typoed_example)
+                    question = suffix + chr(uppercase) + prefix
+                    response = promt_request(question)
                     assert response.status_code == 200
                     assert response.json()["intent"] == "radno_vrijeme"
-
-                    primjer[i] = initial_s
-
-                primjer[i] = initial_s
