@@ -17,6 +17,12 @@ def promt_request(message):
         json=json)
 
 
+def assert_replaced_char(char, index, message):
+    response = promt_request(message[:index] + char + message[index+1:])
+    assert response.status_code == 200
+    assert response.json()["intent"] == "radno_vrijeme"
+
+
 class RadnoVrijeme(TestCase):
     def test_zadani_primjeri_rade(self):
         for n in zadani_primjeri:
@@ -43,13 +49,7 @@ class RadnoVrijeme(TestCase):
             for index in range(len(primjer) - 1):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
-                    question = suffix + chr(lowercase) + prefix
-                    response = promt_request(question)
-                    assert response.status_code == 200
-                    assert response.json()["intent"] == "radno_vrijeme"
+                    assert_replaced_char(chr(lowercase), index, primjer)
 
                 for uppercase in range(ord("A"), ord("Z") + 1):
-                    question = suffix + chr(uppercase) + prefix
-                    response = promt_request(question)
-                    assert response.status_code == 200
-                    assert response.json()["intent"] == "radno_vrijeme"
+                    assert_replaced_char(chr(uppercase), index, primjer)
