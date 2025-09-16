@@ -64,3 +64,9 @@ class RadnoVrijeme(TestCase):
 
                 for t in threads:
                     t.join()
+
+    def test_primjeri_bez_upitnika(self):
+        for primjer in zadani_primjeri:
+            response = promt_request(primjer[:-1])
+            assert response.status_code == 200
+            assert response.json()["intent"] == "radno_vrijeme"
