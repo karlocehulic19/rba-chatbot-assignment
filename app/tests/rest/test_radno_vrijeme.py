@@ -1,4 +1,5 @@
 from unittest import TestCase
+import threading
 import requests
 
 zadani_primjeri = ["Kad radite?", "Koje je radno vrijeme?",
@@ -18,7 +19,8 @@ def promt_request(message):
 
 
 def assert_replaced_char(char, index, message):
-    response = promt_request(message[:index] + char + message[index+1:])
+    new_message = message[:index] + char + message[index+1:]
+    response = promt_request(new_message)
     assert response.status_code == 200
     assert response.json()["intent"] == "radno_vrijeme"
 
@@ -49,7 +51,16 @@ class RadnoVrijeme(TestCase):
             for index in range(len(primjer) - 1):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
-                    assert_replaced_char(chr(lowercase), index, primjer)
+                    t1 = threading.Thread(target=assert_replaced_char, args=(
+                        chr(lowercase), index, primjer))
+                    threads.append(t1)
+                    t1.start()
 
                 for uppercase in range(ord("A"), ord("Z") + 1):
-                    assert_replaced_char(chr(uppercase), index, primjer)
+                    t2 = threading.Thread(target=assert_replaced_char, args=(
+                        chr(uppercase), index, primjer))
+                    t2.start()
+                    threads.append(t2)
+
+                for t in threads:
+                    t.join()
