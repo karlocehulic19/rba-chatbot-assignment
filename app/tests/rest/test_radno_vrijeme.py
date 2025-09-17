@@ -71,7 +71,7 @@ class RadnoVrijeme(TestCase):
                 for t in threads:
                     t.join()
 
-    def test__bez_upitnika(self):
+    def test_bez_upitnika(self):
         for primjer in RadnoVrijemePrimjeri.get_all_examples():
             response = promt_request(primjer[:-1])
             assert response.status_code == 200
