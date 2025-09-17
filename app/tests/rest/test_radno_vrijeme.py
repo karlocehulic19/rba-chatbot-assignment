@@ -10,7 +10,7 @@ RadnoVrijemePrimjeri.add_example("zadani", [
 ])
 
 RadnoVrijemePrimjeri.add_example("modificirani", [
-    "Od kada do kada radite?", "Koje vam je rano vrijeme?",
+    "Od kada do kada radite?", "Koje vam je radno vrijeme?",
     "Do kada ste inace otvoreni?"
 ])
 
