@@ -29,20 +29,21 @@ def promt_request(message):
         json=json)
 
 
+def assert_radno_vrimjeme(response):
+    assert response.status_code == 200
+    assert response.json()["intent"] == "radno_vrijeme"
+
+
 class RadnoVrijeme(TestCase):
     def test_zadani__rade(self):
         for n in RadnoVrijemePrimjeri.get_subexample("zadani"):
             response = promt_request(n)
-
-        assert response.status_code == 200
-        assert response.json()["intent"] == "radno_vrijeme"
+            assert_radno_vrimjeme(response)
 
     def test_modifikacije_zadanih_primjera_rade(self):
         for n in RadnoVrijemePrimjeri.get_subexample("modificirani"):
             response = promt_request(n)
-
-            assert response.status_code == 200
-            assert response.json()["intent"] == "radno_vrijeme"
+            assert_radno_vrimjeme(response)
 
     # pod typo se misli na malu gresku u jednom slovu
     def test__sa_typoom(self):
@@ -51,8 +52,7 @@ class RadnoVrijeme(TestCase):
         def assert_replaced_char(char, index, message):
             new_message = message[:index] + char + message[index+1:]
             response = promt_request(new_message)
-            assert response.status_code == 200
-            assert response.json()["intent"] == "radno_vrijeme"
+            assert_radno_vrimjeme(response)
 
         for primjer in all_examples:
             for index in range(len(primjer)):
@@ -80,11 +80,9 @@ class RadnoVrijeme(TestCase):
     def test_bez_upitnika(self):
         for primjer in RadnoVrijemePrimjeri.get_all_examples():
             response = promt_request(primjer[:-1])
-            assert response.status_code == 200
-            assert response.json()["intent"] == "radno_vrijeme"
+            assert_radno_vrimjeme(response)
 
     def test_sa_sinonimima(self):
         for synonim_primjeri in RadnoVrijemePrimjeri.get_all_synonims():
             response = promt_request(synonim_primjeri)
-            assert response.status_code == 200
-            assert response.json()["intent"] == "radno_vrijeme"
+            assert_radno_vrimjeme(response)
