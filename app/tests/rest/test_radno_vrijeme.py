@@ -2,6 +2,7 @@ from unittest import TestCase
 import threading
 import requests
 from app.tests.rest.utils.examples import Examples
+from app.tests.rest.utils.synonims import synonims
 
 RadnoVrijemePrimjeri = Examples()
 RadnoVrijemePrimjeri.add_example("zadani", [
@@ -75,3 +76,17 @@ class RadnoVrijeme(TestCase):
             response = promt_request(primjer[:-1])
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
+
+    def test_sa_sinonimima(self):
+        for primjer in RadnoVrijemePrimjeri.get_all_examples():
+            rijeci = primjer.split(" ")
+            for i in range(len(rijeci)):
+                rijec = rijeci[i].lower()
+                if rijec not in synonims:
+                    continue
+                for synonim in synonims[rijec]:
+                    primjer_sa_sinonimom = " ".join(
+                        rijeci[:i] + [synonim] + rijeci[i + 1:])
+                    response = promt_request(primjer_sa_sinonimom)
+                    assert response.status_code == 200
+                    assert response.json()["intent"] == "radno_vrijeme"

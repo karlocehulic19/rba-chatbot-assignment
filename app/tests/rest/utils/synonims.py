@@ -3,7 +3,7 @@ synonims = {
     "kada": ["kad", "gda"],
     "radite": ["delate", "šljakate"],
     "koje": ["koe"],
-    "ste": ["jest"],
+    "ste": ["jeste"],
     "vrijeme": ["vrime", "vreme"],
     "inace": ["uobicajeno", "uvjek", "često", "opcenito"],
     "vam": ["vama"]
