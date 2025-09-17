@@ -68,3 +68,10 @@ CroatianKeyboard = Keyboard([
     "asdfghjklčćž",
     "<yxcvbnm,.-",
 ])
+
+CroatianUppercaseKeyboard = Keyboard([
+    '!"#$%&/()=?*',
+    "QWERTZUIOPŠĐ",
+    "ASDFGHJKLČĆŽ",
+    ">YXCVBNM;:_",
+])

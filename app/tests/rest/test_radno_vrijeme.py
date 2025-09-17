@@ -2,6 +2,8 @@ from unittest import TestCase
 import threading
 import requests
 from app.tests.rest.utils.examples import Examples
+from app.tests.rest.utils.keyboard import CroatianKeyboard
+from app.tests.rest.utils.keyboard import CroatianUppercaseKeyboard
 
 RadnoVrijemePrimjeri = Examples()
 RadnoVrijemePrimjeri.add_example("zadani", [
@@ -53,19 +55,24 @@ class RadnoVrijeme(TestCase):
             assert response.json()["intent"] == "radno_vrijeme"
 
         for primjer in all_examples:
-            for index in range(len(all_examples)):
+            for index in range(len(primjer)):
                 threads = []
-                for lowercase in range(ord("a"), ord("z") + 1):
-                    t1 = threading.Thread(target=assert_replaced_char, args=(
-                        chr(lowercase), index, primjer))
-                    threads.append(t1)
-                    t1.start()
+                curr_char = primjer[index]
 
-                for uppercase in range(ord("A"), ord("Z") + 1):
-                    t2 = threading.Thread(target=assert_replaced_char, args=(
-                        chr(uppercase), index, primjer))
-                    t2.start()
-                    threads.append(t2)
+                if curr_char.isupper():
+                    for nei in CroatianUppercaseKeyboard.get_neighbors(
+                            curr_char):
+                        t1 = threading.Thread(
+                            target=assert_replaced_char, args=(nei, index,
+                                                               primjer))
+                        threads.append(t1)
+                        t1.start()
+                else:
+                    for nei in CroatianKeyboard.get_neighbors(curr_char):
+                        t2 = threading.Thread(target=assert_replaced_char,
+                                              args=(nei, index, primjer))
+                        threads.append(t1)
+                        t2.start()
 
                 for t in threads:
                     t.join()
