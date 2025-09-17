@@ -1,17 +1,18 @@
 from unittest import TestCase
 import threading
 import requests
+from app.tests.rest.utils.examples import Examples
 
-primjeri = {
-    "zadani": [
-        "Kad radite?", "Koje je radno vrijeme?",
-        "Do kada ste otvoreni danas?"
-    ],
-    "modificirani": [
-        "Od kada do kada radite?", "Koje vam je rano vrijeme?",
-        "Do kada ste inace otvoreni?"
-    ]
-}
+RadnoVrijemePrimjeri = Examples()
+RadnoVrijemePrimjeri.add_example("zadani", [
+    "Kad radite?", "Koje je radno vrijeme?",
+    "Do kada ste otvoreni danas?"
+])
+
+RadnoVrijemePrimjeri.add_example("modificirani", [
+    "Od kada do kada radite?", "Koje vam je rano vrijeme?",
+    "Do kada ste inace otvoreni?"
+])
 
 
 def promt_request(message):
@@ -27,30 +28,32 @@ def promt_request(message):
 
 
 class RadnoVrijeme(TestCase):
-    def test_zadani_primjeri_rade(self):
-        for n in primjeri["zadani"]:
+    def test_zadani__rade(self):
+        for n in RadnoVrijemePrimjeri.get_subexample("zadani"):
             response = promt_request(n)
 
-            assert response.status_code == 200
-            assert response.json()["intent"] == "radno_vrijeme"
+        assert response.status_code == 200
+        assert response.json()["intent"] == "radno_vrijeme"
 
     def test_modifikacije_zadanih_primjera_rade(self):
-        for n in primjeri["modificirani"]:
+        for n in RadnoVrijemePrimjeri.get_subexample("modificirani"):
             response = promt_request(n)
 
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
 
     # pod typo se misli na malu gresku u jednom slovu
-    def test_primjeri_sa_typoom(self):
+    def test__sa_typoom(self):
+        all_examples = RadnoVrijemePrimjeri.get_all_examples()
+
         def assert_replaced_char(char, index, message):
             new_message = message[:index] + char + message[index+1:]
             response = promt_request(new_message)
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
 
-        def assert_every_possible_typo(primjer):
-            for index in range(len(primjer) - 1):
+        for primjer in all_examples:
+            for index in range(len(all_examples)):
                 threads = []
                 for lowercase in range(ord("a"), ord("z") + 1):
                     t1 = threading.Thread(target=assert_replaced_char, args=(
@@ -67,12 +70,8 @@ class RadnoVrijeme(TestCase):
                 for t in threads:
                     t.join()
 
-        for specificni_primeri in primjeri.values():
-            for primjer in specificni_primeri:
-                assert_every_possible_typo(primjer)
-
-    def test_primjeri_bez_upitnika(self):
-        for primjer in primjeri["zadani"]:
+    def test__bez_upitnika(self):
+        for primjer in RadnoVrijemePrimjeri.get_all_examples():
             response = promt_request(primjer[:-1])
             assert response.status_code == 200
             assert response.json()["intent"] == "radno_vrijeme"
