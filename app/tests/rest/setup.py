@@ -1,5 +1,9 @@
 import requests
 
+API_URL = "http://localhost:8000/"
+
+intents = []
+
 
 class Intent:
     def __init__(self, intent, canonical_reply, examples):
@@ -8,28 +12,18 @@ class Intent:
         self.examples = examples
 
 
-class Setup:
-    singleton = None
-    API_URL = "http://localhost:8000/"
+def get_all_intents():
+    global intents
+    is_already_computed = len(intents) != 0
+    if is_already_computed:
+        return intents
 
-    def __init__(self):
-        if not Setup.singleton:
-            Setup.singleton = self
-            self.intents = []
+    json = requests \
+        .get(API_URL + "/static/intents.json").json()
+    intents = []
 
-        return Setup.singleton
+    for obj in json:
+        intents.append(Intent(obj["intent"], obj["canonical_reply"],
+                              obj["examples"]))
 
-    def get_all_intents(self):
-        is_already_computed = len(self.intents) != 0
-        if is_already_computed:
-            return self.intents
-
-        json = requests \
-            .get(Setup.API_URL + "/static/intents.json").json()
-        self.intents = []
-
-        for obj in json:
-            self.intents.append(Intent(obj["intent"], obj["canonical_reply"],
-                                       obj["examples"]))
-
-        return self.intents
+    return intents
