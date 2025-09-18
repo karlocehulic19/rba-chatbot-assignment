@@ -15,14 +15,21 @@ class Setup:
     def __init__(self):
         if not Setup.singleton:
             Setup.singleton = self
+            self.intents = []
 
         return Setup.singleton
 
-    def get_all_prompts():
+    def get_all_intents(self):
+        is_already_computed = len(self.intents) != 0
+        if is_already_computed:
+            return self.intents
+
         json = requests \
             .get(Setup.API_URL + "/static/intents.json").json()
-        intents = []
+        self.intents = []
 
         for obj in json:
-            intents.append(Intent(obj["intent"], obj["canonical_reply"],
-                                  obj["examples"]))
+            self.intents.append(Intent(obj["intent"], obj["canonical_reply"],
+                                       obj["examples"]))
+
+        return self.intents
