@@ -1,5 +1,5 @@
 import collections
-from app.tests.rest.utils.synonims import synonims
+from utils.synonims import synonims
 
 # class for subsets of examples...tuple
 # etc. default, modified, intermingled...

@@ -1,9 +1,10 @@
 from unittest import TestCase
 import threading
 import requests
-from app.tests.rest.utils.examples import Examples
-from app.tests.rest.utils.keyboard import CroatianKeyboard
-from app.tests.rest.utils.keyboard import CroatianUppercaseKeyboard
+import unittest
+from utils.examples import Examples
+from utils.keyboard import CroatianKeyboard
+from utils.keyboard import CroatianUppercaseKeyboard
 
 RadnoVrijemePrimjeri = Examples()
 RadnoVrijemePrimjeri.add_example("zadani", [
