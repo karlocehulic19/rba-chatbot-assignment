@@ -42,7 +42,7 @@ but is \"f{max_prob}\": {probs[max_prob]}")
                 assert_right_intent(self, response, n)
 
         # pod typo se misli na malu gresku u jednom slovu
-        def test__sa_typoom(self):
+        def test_sa_typoom(self):
             all_examples = intent.examples.get_all_examples()
 
             def assert_replaced_char(char, index, message):
