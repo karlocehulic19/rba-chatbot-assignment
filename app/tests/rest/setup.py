@@ -1,15 +1,9 @@
 import requests
+from utils.intents import Intent
 
-API_URL = "http://localhost:8000/"
+API_URL = "http://localhost:8000"
 
 intents = []
-
-
-class Intent:
-    def __init__(self, intent, canonical_reply, examples):
-        self.type = type
-        self.canonical_reply = canonical_reply
-        self.examples = examples
 
 
 def get_all_intents():
