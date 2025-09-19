@@ -16,8 +16,9 @@ class KeyboardRow:
         return self.row_number
 
     def get_neighbors(self, char):
-        if char not in self.chars:
+        if not char or char not in self.chars:
             return []
+
         index = self.get_char_index(char)
         nei = []
         if index - 1 >= 0:
@@ -58,8 +59,10 @@ class Keyboard:
         OffsetCharRow = self.row[char_row_index + row_offset]
 
         middle_offset_char = OffsetCharRow.get_char(char_index)
-        return OffsetCharRow.get_neighbors(middle_offset_char) + \
-            [middle_offset_char]
+        nei = OffsetCharRow.get_neighbors(middle_offset_char)
+        if middle_offset_char:
+            nei.append(middle_offset_char)
+        return nei
 
     def includes_char(self, char):
         return char in self.chars
