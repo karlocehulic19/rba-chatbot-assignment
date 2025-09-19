@@ -61,6 +61,9 @@ class Keyboard:
         return OffsetCharRow.get_neighbors(middle_offset_char) + \
             [middle_offset_char]
 
+    def includes_char(self, char):
+        return char in self.chars
+
 
 CroatianKeyboard = Keyboard([
     "1234567890'+",
