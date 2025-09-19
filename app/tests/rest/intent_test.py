@@ -22,7 +22,10 @@ def promt_request(message):
 
 def intent_test_factory(intent):
     def assert_right_intent(test, response):
+        json = response.json()
+
         test.assertEqual(response.status_code, 200)
+        test.assertEqual(json["intent"], intent.type)
 
     class IntentTest(TestCase):
         def test_zadani_rade(self):
