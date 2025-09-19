@@ -10,4 +10,4 @@ extended_radno_vrijeme = Intent("radno_vrijeme",
                                     "Kad mogu doci?",
                                 ])
 
-ExtendedRadnoVrijeme = intent_test_factory(extended_radno_vrijeme)
+ExtendedRadnoVrijemeTest = intent_test_factory(extended_radno_vrijeme)
