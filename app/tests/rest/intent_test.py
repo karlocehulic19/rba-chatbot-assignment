@@ -82,6 +82,18 @@ but is \"f{max_prob}\": {probs[max_prob]}")
                 response = promt_request(synonim_primjeri)
                 assert_right_intent(self, response, synonim_primjeri)
 
+        def test_sve_umanjeno(self):
+            for primjer in intent.examples.get_all_examples():
+                lowered = primjer.lower()
+                response = promt_request(primjer.lower())
+                assert_right_intent(self, response, lowered)
+
+        def test_sve_uvecano(self):
+            for primjer in intent.examples.get_all_examples():
+                uppered = primjer.upper()
+                response = promt_request(uppered)
+                assert_right_intent(self, response, uppered)
+
     return IntentTest
 
 
