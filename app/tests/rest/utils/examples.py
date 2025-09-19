@@ -6,6 +6,7 @@ from utils.synonims import synonims
 
 
 class Examples:
+    DEFAULT_SUBTYPE = "default"
     SYNONIM_SUBTYPE = "synonims"
 
     def __init__(self):
