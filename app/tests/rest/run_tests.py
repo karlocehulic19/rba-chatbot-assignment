@@ -15,6 +15,7 @@ def load_tests(loader, standard_tests, pattern):
     for intent_test_case in general_intents_tests:
         suite.addTest(loader.loadTestsFromTestCase(intent_test_case))
 
+    suite.addTest(loader.loadTestsFromTestCase(General))
     suite.addTest(loader.loadTestsFromTestCase(RadnoVrijeme))
 
     return suite
