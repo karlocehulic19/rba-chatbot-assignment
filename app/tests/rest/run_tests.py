@@ -3,6 +3,7 @@ from test_general import General
 from intent_test import general_intents_tests
 from custom_intent_tests.test_radno_vrijeme import ExtendedRadnoVrijeme
 from custom_intent_tests.test_ulaznice import ExtendedUlazniceTest
+from custom_intent_tests.test_adresa import ExtendedAdresaTest
 
 
 class IntentTest(unittest.TestCase):
@@ -18,6 +19,7 @@ def load_tests(loader, standard_tests, pattern):
 
     suite.addTest(loader.loadTestsFromTestCase(General))
     suite.addTest(loader.loadTestsFromTestCase(ExtendedRadnoVrijeme))
+    suite.addTest(loader.loadTestsFromTestCase(ExtendedUlazniceTest))
     suite.addTest(loader.loadTestsFromTestCase(ExtendedUlazniceTest))
 
     return suite
