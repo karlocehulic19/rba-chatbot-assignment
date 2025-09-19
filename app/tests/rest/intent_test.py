@@ -94,6 +94,41 @@ but is \"f{max_prob}\": {probs[max_prob]}")
                 response = promt_request(uppered)
                 assert_right_intent(self, response, uppered)
 
+        def test_izbaceno_slovo(self):
+            for primjer in intent.examples.get_all_examples():
+                for i in range(len(primjer) - 1):
+                    izbaceno_slovo = primjer[:i] + primjer[i+1:]
+                    response = promt_request(izbaceno_slovo)
+                    assert_right_intent(self, response, izbaceno_slovo)
+
+        def test_izbacena_rijec(self):
+            for primjer in intent.examples.get_all_examples():
+                rijeci = primjer.split(" ")
+                for i in range(len(rijeci)):
+                    izbacena_rijec = " ".join(rijeci[:i] + rijeci[i+1:])
+                    response = promt_request(izbacena_rijec)
+                    assert_right_intent(self, response, izbacena_rijec)
+
+        # kvacice su č, ć, š...
+        def test_bez_kvacica(self):
+            mapper_kvacica = {
+                "č": "c",
+                "ć": "c",
+                "ž": "z",
+                "š": "s",
+                "đ": "d"
+            }
+
+            for primjer in intent.examples.get_all_examples():
+                slova = primjer.lower().split()
+                for i in range(len(slova)):
+                    if slova[i] in mapper_kvacica:
+                        slova[i] = mapper_kvacica[slova[i]]
+
+                bez_kvacica = "".join(slova)
+                response = promt_request("".join(slova))
+                assert_right_intent(self, response, bez_kvacica)
+
     return IntentTest
 
 
