@@ -29,6 +29,12 @@ def intent_test_factory(intent):
                          f"Intent type missaligment: should be \"{intent.type}\" \
 but is \"{json['intent']}\" \n For question: {question}")
 
+        probs = json["probs"]
+        max_prob = max(probs, key=lambda x: probs[x])
+
+        test.assertEqual(probs[intent.type], probs[max_prob], f"Probs inccorect pick, should be \"{intent.type}\": {probs[intent.type]} \n \
+but is \"f{max_prob}\": {probs[max_prob]}")
+
     class IntentTest(TestCase):
         def test_zadani_rade(self):
             for n in intent.examples.get_subexample(Examples.DEFAULT_SUBTYPE):
