@@ -6,5 +6,8 @@ synonims = {
     "ste": ["jeste"],
     "vrijeme": ["vrime", "vreme"],
     "inace": ["uobicajeno", "uvjek", "često", "opcenito"],
-    "vam": ["vama"]
+    "vam": ["vama"],
+    "ima": ["je"],
+    "gdje": ["gdi", "di"],
+    "imate": ["ima"]
 }
